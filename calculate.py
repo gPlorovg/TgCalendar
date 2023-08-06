@@ -1,6 +1,11 @@
 # 01.01.2023 -> Sunday
 # leap year - 366 days, year - 365 days
 # if year % 4 = 0 then year is leap year
+from datetime import date
+
+
+def get_year() -> int:
+    return date.today().year
 
 
 def determine_day_of_week(date: str) -> str:
