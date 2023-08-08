@@ -35,24 +35,21 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_name = "test_name"
     date1 = "08.07.2023"
     date2 = "10.07.2023"
-    event_id = calc.get_event_id(context.args[0][4:], event_name, date1, date2)
+    group_id = context.args[0][4:]
+    event_id = calc.get_event_id(group_id, event_name, date1, date2)
     picture_path = "pictures/" + str(event_id) + ".png"
     url = helpers.create_deep_linked_url(context.bot.username, "eid_" + str(event_id))
     keyboard = InlineKeyboardMarkup.from_button(
         InlineKeyboardButton(text="FINISH", url=url)
     )
     text = "Just Do IT"
-    await db.create("calendars", {"group_id": context.args[0][4:], "event_id": event_id, "event_name": event_name,
+    await db.create("calendars", {"group_id": group_id, "event_id": event_id, "event_name": event_name,
                     "active": True, "picture_path": picture_path})
-    await generate_picture(update, context, date1, date2, picture_path)
-    await context.bot.send_message(update.effective_chat.id, text, reply_markup=keyboard)
-
-
-async def generate_picture(update: Update, context: ContextTypes.DEFAULT_TYPE, date1, date2, path):
-    calendar = Calendar(date1, date2, " ".join(context.args[1:]))
-    calendar.save(path)
-    pic_message = (await context.bot.send_photo(chat_id=update.effective_chat.id, photo=path))
-    await context.bot.pin_chat_message(chat_id=update.effective_chat.id, message_id=pic_message.message_id)
+    calendar = Calendar(date1, date2, event_name)
+    calendar.save(picture_path)
+    pic_message = await context.bot.send_photo(chat_id=group_id, photo=picture_path)
+    await context.bot.pin_chat_message(chat_id=group_id, message_id=pic_message.message_id)
+    await context.bot.send_message(chat_id=group_id, text=text, reply_markup=keyboard)
 
 
 if __name__ == '__main__':
