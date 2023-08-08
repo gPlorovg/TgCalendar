@@ -8,7 +8,10 @@ class DataBase:
         try:
             self.connection = pg.connect(f"dbname={db} user={user} host={host} password={password}")
         except:
-            print("Error")
+            print("DB connection error!")
+        finally:
+            if self.connection:
+                self.close_connection()
         self.cursor = self.connection.cursor()
 
     def create(self, table: str, values: dict):
