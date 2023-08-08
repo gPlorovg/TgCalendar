@@ -2,7 +2,7 @@
 # leap year - 366 days, year - 365 days
 # if year % 4 = 0 then year is leap year
 from datetime import date
-
+from sys import maxsize
 
 def get_year() -> int:
     return date.today().year
@@ -67,4 +67,4 @@ def get_positions(date1: str, date2: str, arr=None) -> list:
 
 
 def get_event_id(group_id: str, event_name: str, date1: str, date2: str) -> int:
-    return hash(group_id + event_name + date1 + date2)
+    return hash(group_id + event_name + date1 + date2) % (maxsize + 1)
