@@ -35,16 +35,16 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE):
     event_name = "test_name"
     date1 = "08.07.2023"
     date2 = "10.07.2023"
-    #При нажатии на кнопку create
-    picture_path = "pictures/" + db.event_counter + ".png"
-    db.create("calendars", {"group_id": context.args[0][4:], "event_id": db.event_counter, "event_name": event_name,
-                            "active": True, "picture_path": picture_path})
-    await generate_picture(update, context, date1, date2, picture_path)
-    url = helpers.create_deep_linked_url(context.bot.username, "eid_" + str(db.event_counter))
-    text = "Go and make your event!"
+    event_id = calc.get_event_id(context.args[0][4:], event_name, date1, date2)
+    picture_path = "pictures/" + str(event_id) + ".png"
+    url = helpers.create_deep_linked_url(context.bot.username, "eid_" + str(event_id))
     keyboard = InlineKeyboardMarkup.from_button(
-        InlineKeyboardButton(text="Push me!", url=url)
+        InlineKeyboardButton(text="FINISH", url=url)
     )
+    text = "Just Do IT"
+    await db.create("calendars", {"group_id": context.args[0][4:], "event_id": event_id, "event_name": event_name,
+                    "active": True, "picture_path": picture_path})
+    await generate_picture(update, context, date1, date2, picture_path)
     await context.bot.send_message(update.effective_chat.id, text, reply_markup=keyboard)
 
 
@@ -58,7 +58,7 @@ async def generate_picture(update: Update, context: ContextTypes.DEFAULT_TYPE, d
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TOKEN).build()
 
-    application.add_handler(CommandHandler("start", create_calendar, filters.Regex("gid_")))
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("start", create_calendar, filters.Regex("gid_")))
 
     application.run_polling()

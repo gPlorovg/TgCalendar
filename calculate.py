@@ -64,3 +64,7 @@ def get_positions(date1: str, date2: str, arr=None) -> list:
 
     positions[i] = date
     return positions[:i+1]
+
+
+def get_event_id(group_id: str, event_name: str, date1: str, date2: str) -> int:
+    return hash(group_id + event_name + date1 + date2)

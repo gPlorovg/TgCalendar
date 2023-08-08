@@ -3,8 +3,6 @@ import psycopg2 as pg
 
 class DataBase:
     def __init__(self, db, user, host, password):
-        with open("event_count", "r") as f:
-            self.event_counter = int(f.read())
         try:
             self.connection = pg.connect(f"dbname={db} user={user} host={host} password={password}")
         except:
@@ -15,9 +13,6 @@ class DataBase:
         self.cursor = self.connection.cursor()
 
     def create(self, table: str, values: dict):
-        self.event_counter += 1
-        if table == "calendars":
-            values["event_id"] = self.event_counter
         self.cursor.execute(f"""
         INSERT INTO {table} VALUES ({",".join(["%s " for _ in range(len(values))])})
         """, list(values.values()))
@@ -44,9 +39,6 @@ class DataBase:
         self.connection.commit()
 
     def close_connection(self):
-        with open("event_count", "w") as f:
-            f.write(str(self.event_counter))
-
         self.commit()
         self.cursor.close()
         self.connection.close()
