@@ -69,3 +69,15 @@ def get_positions(dates: list) -> list:
 
 def get_event_id(group_id: str, event_name: str, date1: str) -> int:
     return hash(group_id + event_name + date1) % (maxsize + 1)
+
+
+def generate_days(date1: str, date2: str) -> list:
+    date = date1
+    resp = list()
+
+    while date != date2:
+        resp.append(date)
+        date, f = next_date(date)
+
+    resp.append(date2)
+    return resp
