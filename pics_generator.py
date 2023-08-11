@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageColor, ImageFont
-import calculate as calc
 from math import ceil
+import calculate as calc
 
 
 class Calendar:
@@ -8,9 +8,9 @@ class Calendar:
         self.basic = ImageColor.getrgb("#D9D9D9")
         self.black = ImageColor.getrgb("#1E1E1E")
         self.red = ImageColor.getrgb("#DF2727")
-        self.colors = [ImageColor.getrgb(i) for i in ["#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300",
-                                                      "#dc0ab4", "#27aeef", "#00bfa0", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300",
-                                                      "#dc0ab4", "#27aeef", "#00bfa0"]]
+        self.colors = [ImageColor.getrgb(i) for i in ["#FF4B3E", "#571F4E", "#2B59C3", "#EF9CDA", "#317B22", "#E0FF4F",
+                                                      "#C08552", "#03CEA4", "#2B3A67", "#F038FF", "#6CAE75", "#F0A202",
+                                                      "#8390FA", "#78E3FD", "#FFF07C", "#EA638C"]]
         self.transparent = (255, 0, 0, 0)
         self.font24 = ImageFont.truetype("RobotoMono-Medium.ttf", 24)
         self.font28 = ImageFont.truetype("RobotoMono-Medium.ttf", 28)
