@@ -61,7 +61,7 @@ def get_positions(dates: list) -> list:
         i += 1
         date, f = next_date(date)
         if f and i % 7 != 1:
-            i = i + 6
+            i = i + 7
 
     positions[i] = dates[-1]
     return positions[:i+1]
