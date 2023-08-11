@@ -49,20 +49,21 @@ def next_date(date: str) -> tuple:
         return "01" + "." + str(month + 1).zfill(2) + "." + str(year), True
 
 
-def get_positions(date1: str, date2: str, arr=None) -> list:
+def get_positions(dates: list) -> list:
     days_of_week = {"Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6}
     positions = ["" for _ in range(35)]
-    date = date1
-    i = days_of_week[determine_day_of_week(date1)]
+    i = days_of_week[determine_day_of_week(dates[0])]
+    date = dates[0]
 
-    while date != date2 and i < 35:
-        positions[i] = date
+    while date != dates[-1] and i < 35:
+        if date in dates:
+            positions[i] = date
         i += 1
         date, f = next_date(date)
         if f and i % 7 != 1:
             i = i + 6
 
-    positions[i] = date
+    positions[i] = dates[-1]
     return positions[:i+1]
 
 
