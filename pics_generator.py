@@ -9,6 +9,7 @@ class Calendar:
         self.black = ImageColor.getrgb("#1E1E1E")
         self.red = ImageColor.getrgb("#DF2727")
         self.colors = [ImageColor.getrgb(i) for i in ["#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300",
+                                                      "#dc0ab4", "#27aeef", "#00bfa0", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300",
                                                       "#dc0ab4", "#27aeef", "#00bfa0"]]
         self.transparent = (255, 0, 0, 0)
         self.font24 = ImageFont.truetype("RobotoMono-Medium.ttf", 24)
@@ -24,6 +25,9 @@ class Calendar:
         self.weeks = ceil(len(self.positions) / 7)
         # self.main_h = 60 + 58 * text_lines + 52 + 160 + 170 * weeks + 20
         self.main_h = 350 + 170 * self.weeks
+        self.ceil_w = 160
+        self.ceil_h = 160
+
         self.image = Image.new("RGBA", (self.main_w, self.main_h), self.transparent)
         self.draw = ImageDraw.Draw(self.image)
 
@@ -52,7 +56,7 @@ class Calendar:
     def draw_day(self, x, y, date, is_weekend):
         color = self.red if is_weekend else self.black
 
-        self.draw.rounded_rectangle((x, y, x + 160, y + 160), fill=self.basic, outline=color,
+        self.draw.rounded_rectangle((x, y, x + self.ceil_w, y + self.ceil_h), fill=self.basic, outline=color,
                                     width=4, radius=28)
         self.draw.rounded_rectangle((x + 14, y + 12, x + 14 + 36, y + 12 + 32), fill=self.basic, outline=color,
                                     width=2, radius=6)
@@ -72,18 +76,48 @@ class Calendar:
                 self.draw_day(x, y, v.split(".")[0], (i + 1) % 7 == 0 or (i + 2) % 7 == 0)
             if (i + 1) % 7 == 0:
                 x = 20 + 180
-                y += 170
+                y += 10 + self.ceil_h
             else:
-                x += 170
+                x += 10 + self.ceil_w
+
+    def redraw_all(self):
+        self.image = Image.new("RGBA", (self.main_w, self.main_h), self.transparent)
+        self.draw = ImageDraw.Draw(self.image)
+        self.draw_main()
+        self.draw_title()
+        self.draw_header()
+        self.draw_grid()
+
+    def check_free_space(self):
+        return len(self.users) * 70 + 20 < self.main_h - 340
+
+    def check_free_space_grid(self):
+        return self.weeks * self.ceil_h < self.main_h - 340
+
+    def size_up_main(self, h):
+        self.main_h = h
+        self.redraw_all()
+
+    def size_up_grid(self):
+        self.ceil_h += 22
+        self.redraw_all()
 
     def add_user(self, name, dates):
+        if not self.check_free_space():
+            self.size_up_main(self.main_h + 90)
+        elif not self.check_free_space_grid():
+            self.size_up_main(self.ceil_h * (self.weeks + 2) + 340)
+
+        if len(self.users) > 6:
+            self.size_up_grid()
+
         if self.colors:
             self.users.append((name, self.colors.pop(), dates))
         self.draw_names()
         self.draw_marks()
 
     def draw_names(self):
-        y = self.main_h // 2
+        y = 360
         for user in self.users:
             self.draw.text((1340 + 180, y), user[0], font=self.font40, fill=user[1])
             y += 60
@@ -112,11 +146,12 @@ class Calendar:
 
 
 if __name__ == "__main__":
-    test = Calendar(calc.generate_days("11.08.2023", "02.09.2023"), "День рождения Ромы")
-    test.add_user("@plorov", calc.generate_days("11.08.2023", "15.08.2023") + calc.generate_days("30.08.2023", "02.09.2023"))
-    test.add_user("Денис", calc.generate_days("11.08.2023", "15.08.2023") + ["19.08.2023"])
-    test.add_user("Катя К", calc.generate_days("11.08.2023", "15.08.2023"))
-    test.add_user("Влад", calc.generate_days("30.08.2023", "02.09.2023"))
-    test.add_user("@spqrty", calc.generate_days("30.08.2023", "02.09.2023"))
+    test = Calendar(calc.generate_days("11.08.2023", "01.09.2023"), "День рождения Ромы")
+    test.add_user("@plorov", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("Денис", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("Катя К", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("Влад", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@spqrty", calc.generate_days("11.08.2023", "12.08.2023"))
+
     test.draw_marks()
     test.save()
