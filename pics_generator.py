@@ -98,11 +98,11 @@ class Calendar:
                 else:
                     y = 340 + (i // 7) * 170 + 12 + i_user * 20
                     if i_user < 2:
-                        x = 20 + 180 + (i % 7 - 1) * 170 + 48 + 6
+                        x = 20 + 180 + (i % 7) * 170 + 48 + 6
                         self.draw.rounded_rectangle((x, y, x + 96, y + 16), fill=user[1], outline=user[1],
                                                     width=1, radius=8)
                     else:
-                        x = 20 + 180 + (i % 7 - 1) * 170 + 6
+                        x = 20 + 180 + (i % 7) * 170 + 6
                         self.draw.rounded_rectangle((x, y, x + 144, y + 16), fill=user[1], outline=user[1],
                                                     width=1, radius=8)
 
@@ -112,11 +112,11 @@ class Calendar:
 
 
 if __name__ == "__main__":
-    test = Calendar(calc.generate_days("30.08.2023", "02.09.2023"), "День рождения Ромы")
-    # test.add_user("@plorov", ["08.07.2023", "09.07.2023", "15.07.2023"])
-    # test.add_user("Денис", ["08.07.2023", "09.07.2023"])
-    # test.add_user("Катя К", ["09.07.2023", "15.07.2023"])
-    # test.add_user("Влад", ["08.07.2023", "09.07.2023"])
-    # test.add_user("@spqrty", ["10.07.2023", "15.07.2023"])
-    # test.draw_marks()
+    test = Calendar(calc.generate_days("11.08.2023", "02.09.2023"), "День рождения Ромы")
+    test.add_user("@plorov", calc.generate_days("11.08.2023", "15.08.2023") + calc.generate_days("30.08.2023", "02.09.2023"))
+    test.add_user("Денис", calc.generate_days("11.08.2023", "15.08.2023") + ["19.08.2023"])
+    test.add_user("Катя К", calc.generate_days("11.08.2023", "15.08.2023"))
+    test.add_user("Влад", calc.generate_days("30.08.2023", "02.09.2023"))
+    test.add_user("@spqrty", calc.generate_days("30.08.2023", "02.09.2023"))
+    test.draw_marks()
     test.save()
