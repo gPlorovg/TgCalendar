@@ -92,7 +92,7 @@ class Calendar:
         return len(self.users) * 70 + 20 < self.main_h - 340
 
     def check_free_space_grid(self):
-        return self.weeks * self.ceil_h < self.main_h - 340
+        return self.weeks * (self.ceil_h + 10) < self.main_h - 340
 
     def size_up_main(self, h):
         self.main_h = h
@@ -103,13 +103,13 @@ class Calendar:
         self.redraw_all()
 
     def add_user(self, name, dates):
-        if not self.check_free_space():
-            self.size_up_main(self.main_h + 90)
-        elif not self.check_free_space_grid():
-            self.size_up_main(self.ceil_h * (self.weeks + 2) + 340)
-
         if len(self.users) > 6:
             self.size_up_grid()
+
+        if not self.check_free_space():
+            self.size_up_main(self.main_h + 90)
+        if not self.check_free_space_grid():
+            self.size_up_main(self.ceil_h * self.weeks + 434)
 
         if self.colors:
             self.users.append((name, self.colors.pop(), dates))
@@ -146,12 +146,23 @@ class Calendar:
 
 
 if __name__ == "__main__":
-    test = Calendar(calc.generate_days("11.08.2023", "01.09.2023"), "День рождения Ромы")
-    test.add_user("@plorov", calc.generate_days("11.08.2023", "12.08.2023"))
-    test.add_user("Денис", calc.generate_days("11.08.2023", "12.08.2023"))
-    test.add_user("Катя К", calc.generate_days("11.08.2023", "12.08.2023"))
-    test.add_user("Влад", calc.generate_days("11.08.2023", "12.08.2023"))
-    test.add_user("@spqrty", calc.generate_days("11.08.2023", "12.08.2023"))
+    test = Calendar(calc.generate_days("11.08.2023", "13.08.2023"), "День рождения Ромы")
+    test.add_user("@plorov1", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov2", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov3", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov4", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov5", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov6", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov7", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
+    test.add_user("@plorov8", calc.generate_days("11.08.2023", "12.08.2023"))
 
     test.draw_marks()
     test.save()
