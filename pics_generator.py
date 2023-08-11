@@ -69,8 +69,8 @@ class Calendar:
                                fill=self.black, width=3)
                 f = False
             if v != "":
-                self.draw_day(x, y, v.split(".")[0], (i + 1) % 7 == 0 or i % 7 == 0)
-            if i % 7 == 0 and not i:
+                self.draw_day(x, y, v.split(".")[0], (i + 1) % 7 == 0 or (i + 2) % 7 == 0)
+            if (i + 1) % 7 == 0:
                 x = 20 + 180
                 y += 170
             else:
@@ -112,7 +112,7 @@ class Calendar:
 
 
 if __name__ == "__main__":
-    test = Calendar(["03.07.2023", "04.07.2023", "05.07.2023", "06.07.2023"], "День рождения Ромы")
+    test = Calendar(calc.generate_days("30.08.2023", "02.09.2023"), "День рождения Ромы")
     # test.add_user("@plorov", ["08.07.2023", "09.07.2023", "15.07.2023"])
     # test.add_user("Денис", ["08.07.2023", "09.07.2023"])
     # test.add_user("Катя К", ["09.07.2023", "15.07.2023"])
