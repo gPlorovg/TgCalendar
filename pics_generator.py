@@ -4,7 +4,7 @@ from math import ceil
 
 
 class Calendar:
-    def __init__(self, head_date, tail_date, text):
+    def __init__(self, dates, text):
         self.basic = ImageColor.getrgb("#D9D9D9")
         self.black = ImageColor.getrgb("#1E1E1E")
         self.red = ImageColor.getrgb("#DF2727")
@@ -16,13 +16,11 @@ class Calendar:
         self.font40 = ImageFont.truetype("RobotoMono-Medium.ttf", 40)
         self.font44 = ImageFont.truetype("RobotoMono-Medium.ttf", 44)
 
-        self.head = head_date
-        self.tail = tail_date
         # (name, color, [dates])
         self.users = list()
         self.text = text
         self.main_w = 1650 + 180
-        self.positions = calc.get_positions(self.head, self.tail)
+        self.positions = calc.get_positions(dates)
         self.weeks = ceil(len(self.positions) / 7)
         # self.main_h = 60 + 58 * text_lines + 52 + 160 + 170 * weeks + 20
         self.main_h = 350 + 170 * self.weeks
@@ -62,7 +60,7 @@ class Calendar:
 
     def draw_grid(self):
         x = 20 + 180
-        y = 170
+        y = 340
         f = True
         for i, v in enumerate(self.positions):
             if f and v != "" or v.split(".")[0] == "01":
@@ -72,7 +70,7 @@ class Calendar:
                 f = False
             if v != "":
                 self.draw_day(x, y, v.split(".")[0], (i + 1) % 7 == 0 or i % 7 == 0)
-            if i % 7 == 0:
+            if i % 7 == 0 and not i:
                 x = 20 + 180
                 y += 170
             else:
@@ -114,11 +112,11 @@ class Calendar:
 
 
 if __name__ == "__main__":
-    test = Calendar("29.07.2023", "04.08.2023", "День рождения Ромы")
-    test.add_user("@plorov", ["29.07.2023", "30.07.2023", "02.08.2023"])
-    test.add_user("Денис", ["29.07.2023", "30.07.2023"])
-    test.add_user("Катя К", ["29.07.2023", "30.07.2023"])
-    test.add_user("Влад", ["29.07.2023", "30.07.2023"])
-    test.add_user("@spqrty", ["29.07.2023", "30.07.2023"])
-    test.draw_marks()
+    test = Calendar(["03.07.2023", "04.07.2023", "05.07.2023", "06.07.2023"], "День рождения Ромы")
+    # test.add_user("@plorov", ["08.07.2023", "09.07.2023", "15.07.2023"])
+    # test.add_user("Денис", ["08.07.2023", "09.07.2023"])
+    # test.add_user("Катя К", ["09.07.2023", "15.07.2023"])
+    # test.add_user("Влад", ["08.07.2023", "09.07.2023"])
+    # test.add_user("@spqrty", ["10.07.2023", "15.07.2023"])
+    # test.draw_marks()
     test.save()
