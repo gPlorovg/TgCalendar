@@ -4,8 +4,9 @@
 from datetime import date
 from sys import maxsize
 
-def get_year() -> int:
-    return date.today().year
+
+def get_today_date() -> date:
+    return date.today()
 
 
 def determine_day_of_week(date: str) -> str:

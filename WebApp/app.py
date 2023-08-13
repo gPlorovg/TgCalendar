@@ -1,15 +1,24 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from calculate import get_today_date
+
 
 app = Flask(__name__)
 
 
+@app.get("/pre_config_calendar")
+def pre_config_calendar():
+    return render_template("pre_config_calendar.html", today_date=get_today_date())
+
+
 @app.get("/config_calendar")
-def config_calendar_page():
-    return render_template("config_calendar.html")
+def config_calendar():
+    event_name = request.args.get("event_name")
+    start_date = request.args.get("start_date")
+    return render_template("config_calendar.html", event_name=event_name, start_date=start_date)
 
 
 @app.get("/vote")
-def vote_page():
+def vote():
     return render_template("vote.html")
 
 
