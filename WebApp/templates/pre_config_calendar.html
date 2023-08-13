@@ -24,7 +24,14 @@
         </div>
     </div>
     <script>
-
+        const btn = document.getElementById("next_step");
+        const en = document.getElementById("event_name");
+        const sd = document.getElementById("start_date");
+        btn.addEventListener("click", () => window.location.replace(window.location.origin + "/config_calendar?"
+            + new URLSearchParams({
+                event_name: en.value,
+                start_date: sd.value
+        })));
     </script>
 </body>
 </html>
