@@ -7,7 +7,6 @@ event_label.setAttribute("id", "event_name");
 
 const calendar = document.querySelector("table");
 calendar.insertAdjacentElement("beforebegin", event_label);
-console.log(localStorage.getItem("start_date"));
 
 const dates_row = document.createElement("tr");
 const month_cell = document.createElement("td");
@@ -26,6 +25,11 @@ for (let i = 0; i < 7; i++) {
 }
 
 calendar.insertAdjacentElement("beforeend", dates_row);
-
-
-
+console.log(localStorage.getItem("start_date"));
+async function get_positions(date1){
+    const resp = await fetch(window.origin + "/pre_calendar?start_date=" + date1)
+        .then((data) => data.json());
+    return resp;
+}
+data = get_positions("2023-08-15");
+console.log(data);

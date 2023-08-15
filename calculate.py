@@ -56,7 +56,7 @@ def get_positions(dates: list) -> list:
     i = days_of_week[determine_day_of_week(dates[0])]
     date = dates[0]
 
-    while date != dates[-1] and i < 35:
+    while date != dates[-1] and i < 34:
         if date in dates:
             positions[i] = date
         i += 1
@@ -64,7 +64,7 @@ def get_positions(dates: list) -> list:
         if f and i % 7 != 1:
             i = i + 7
 
-    positions[i] = dates[-1]
+    positions[i] = date
     return positions[:i+1]
 
 
@@ -72,13 +72,17 @@ def get_event_id(group_id: str, event_name: str, date1: str) -> int:
     return hash(group_id + event_name + date1) % (maxsize + 1)
 
 
-def generate_days(date1: str, date2: str) -> list:
+def generate_days(date1: str, date2: str = None) -> list:
     date = date1
     resp = list()
+    if date2:
+        while date != date2:
+            resp.append(date)
+            date, f = next_date(date)
+    else:
+        for i in range(35):
+            resp.append(date)
+            date, f = next_date(date)
 
-    while date != date2:
-        resp.append(date)
-        date, f = next_date(date)
-
-    resp.append(date2)
+    resp.append(date)
     return resp

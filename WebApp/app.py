@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request
-from calculate import get_today_date
+from flask import Flask, render_template, request, make_response, jsonify
+from calculate import get_today_date, generate_days, get_positions
 
 
 app = Flask(__name__)
@@ -13,6 +13,13 @@ def pre_config_calendar():
 @app.get("/config_calendar")
 def config_calendar():
     return render_template("config_calendar.html")
+
+
+@app.get("/pre_calendar")
+def pre_calendar():
+    date1 = request.args.get("start_date")
+    date1 = ".".join(date1.split("-")[::-1])
+    return make_response(jsonify({"positions": get_positions(generate_days(date1))}), 200)
 
 
 @app.get("/vote")
