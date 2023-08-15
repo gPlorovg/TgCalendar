@@ -461,3 +461,9 @@ table {
 .holiday:hover {
   background-color: #DF2727;
 }
+
+#event_name {
+  font-size: 26px;
+  color: #1E1E1E;
+  text-align: center;
+}
