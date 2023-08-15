@@ -12,9 +12,7 @@ def pre_config_calendar():
 
 @app.get("/config_calendar")
 def config_calendar():
-    event_name = request.args.get("event_name")
-    start_date = request.args.get("start_date")
-    return render_template("config_calendar.html", event_name=event_name, start_date=start_date)
+    return render_template("config_calendar.html")
 
 
 @app.get("/vote")

@@ -27,11 +27,12 @@
         const btn = document.getElementById("next_step");
         const en = document.getElementById("event_name");
         const sd = document.getElementById("start_date");
-        btn.addEventListener("click", () => window.location.replace(window.location.origin + "/config_calendar?"
-            + new URLSearchParams({
-                event_name: en.value,
-                start_date: sd.value
-        })));
+        function save_and_next() {
+            localStorage.setItem("event_name", en.value);
+            localStorage.setItem("start_date", sd.value);
+            window.location = window.location.origin + "/config_calendar";
+        }
+        btn.addEventListener("click", save_and_next);
     </script>
 </body>
 </html>
