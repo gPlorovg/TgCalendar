@@ -50,11 +50,13 @@ def next_date(date: str) -> tuple:
         return "01" + "." + str(month + 1).zfill(2) + "." + str(year), True
 
 
-def get_positions(dates: list) -> list:
+def get_positions(dates: list) -> dict:
     days_of_week = {"Monday": 0, "Tuesday": 1, "Wednesday": 2, "Thursday": 3, "Friday": 4, "Saturday": 5, "Sunday": 6}
     positions = ["" for _ in range(35)]
     i = days_of_week[determine_day_of_week(dates[0])]
     date = dates[0]
+    months_positions = ["" for _ in range(5)]
+    months_positions[0] = determine_month(date.split(".")[1])
 
     while date != dates[-1] and i < 34:
         if date in dates:
@@ -63,9 +65,11 @@ def get_positions(dates: list) -> list:
         date, f = next_date(date)
         if f and i % 7 != 1:
             i = i + 7
+        if f:
+            months_positions[(i // 7)] = determine_month(date.split(".")[1])
 
     positions[i] = date
-    return positions[:i+1]
+    return {"positions": positions[:i+1], "months_positions": months_positions}
 
 
 def get_event_id(group_id: str, event_name: str, date1: str) -> int:
