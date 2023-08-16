@@ -136,7 +136,7 @@ class Calendar:
                 except ValueError:
                     print(date + "not in calendar!")
                 else:
-                    y = 340 + (i // 7) * 170 + 12 + i_user * 20
+                    y = 340 + (i // 7) * (10 + self.ceil_h) + 12 + i_user * 20
                     if i_user < 2:
                         x = 20 + 180 + (i % 7) * 170 + 48 + 6
                         self.draw.rounded_rectangle((x, y, x + 96, y + 16), fill=user[1], outline=user[1],
