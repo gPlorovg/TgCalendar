@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 from calculate import get_today_date, generate_days, get_positions
 
 
@@ -20,6 +20,12 @@ def calendar_grid():
     date1 = request.args.get("start_date")
     date1 = ".".join(date1.split("-")[::-1])
     return get_positions(generate_days(date1))
+
+
+@app.post("/create_calendar")
+def create_calendar():
+    print(request.get_json())
+    return make_response({'message': 'Done', 'code': 'SUCCESS'}, 200)
 
 
 @app.get("/vote")

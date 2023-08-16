@@ -460,12 +460,12 @@ table {
 }
 
 .day:hover {
-  background-color: #1E1E1E;
-  color: white;
+  background-color: #1E1E1E !important;
+  color: white !important;
 }
 
 .holiday:hover {
-  background-color: #DF2727;
+  background-color: #DF2727 !important;
 }
 
 @media (max-width: 1200px) {
