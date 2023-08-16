@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, make_response, jsonify
+from flask import Flask, render_template, request
 from calculate import get_today_date, generate_days, get_positions
 
 
@@ -15,11 +15,11 @@ def config_calendar():
     return render_template("config_calendar.html")
 
 
-@app.get("/pre_calendar")
-def pre_calendar():
+@app.get("/calendar_grid")
+def calendar_grid():
     date1 = request.args.get("start_date")
     date1 = ".".join(date1.split("-")[::-1])
-    return make_response(jsonify({"positions": get_positions(generate_days(date1))}), 200)
+    return get_positions(generate_days(date1))
 
 
 @app.get("/vote")
