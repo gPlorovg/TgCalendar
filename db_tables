@@ -1,4 +1,4 @@
-DROP TABLE calendars, dates;
+DROP TABLE calendars, marks;
 -- В таблице users пока нет необходимости
 -- CREATE TABLE users
 -- (
@@ -8,14 +8,15 @@ DROP TABLE calendars, dates;
 -- );
 CREATE TABLE marks
 (
-    event_id I       NTEGER,
+    event_id         BIGINT,
     chat_id          BIGINT,
-    positions        DATE[]
+    username         VARCHAR(32),
+    positions        BOOLEAN[35]
 );
 CREATE TABLE calendars
 (
-    group_id         BIGINT,
     event_id         BIGINT,
+    group_id         BIGINT,
     event_name       VARCHAR(60),
     calendar_grid    VARCHAR(10)[35],
     active           BOOLEAN
