@@ -6,17 +6,17 @@ DROP TABLE calendars, dates;
 --     username      VARCHAR(32),
 --     prefer_names  VARCHAR(64)[5]
 -- );
-CREATE TABLE dates
+CREATE TABLE marks
 (
-    event_id INTEGER,
-    chat_id  BIGINT,
-    dates    DATE[]
+    event_id I       NTEGER,
+    chat_id          BIGINT,
+    positions        DATE[]
 );
 CREATE TABLE calendars
 (
-    group_id     BIGINT,
-    event_id     BIGINT,
-    event_name   VARCHAR(100),
-    active       BOOLEAN,
-    picture_path VARCHAR(200)
+    group_id         BIGINT,
+    event_id         BIGINT,
+    event_name       VARCHAR(60),
+    calendar_grid    VARCHAR(10)[35],
+    active           BOOLEAN
 );
