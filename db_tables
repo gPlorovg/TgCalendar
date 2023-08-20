@@ -1,0 +1,22 @@
+DROP TABLE calendars, dates;
+-- В таблице users пока нет необходимости
+-- CREATE TABLE users
+-- (
+--     chat_id       BIGINT,
+--     username      VARCHAR(32),
+--     prefer_names  VARCHAR(64)[5]
+-- );
+CREATE TABLE dates
+(
+    event_id INTEGER,
+    chat_id  BIGINT,
+    dates    DATE[]
+);
+CREATE TABLE calendars
+(
+    group_id     BIGINT,
+    event_id     BIGINT,
+    event_name   VARCHAR(100),
+    active       BOOLEAN,
+    picture_path VARCHAR(200)
+);
