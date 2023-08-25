@@ -91,19 +91,27 @@ class DataBase:
     def read_calendar(self, event_id: int) -> tuple:
         if self.connection:
             try:
+                # self.cursor.execute("""
+                #     SELECT c.event_name, m.username FROM calendars c, marks m
+                #     WHERE c.event_id=%(e_id)s AND m.event_id=%(e_id)s;
+                # """, {"e_id": event_id})
                 self.cursor.execute("""
-                    SELECT calendar_grid FROM calendars, positions FROM marks
-                    WHERE event_id = %s;
-                """, event_id)
+                    SELECT c.calendar_grid FROM calendars c WHERE c.event_id = %(e_id)s;
+                """, {"e_id": event_id})
+                calendar_grid = self.cursor.fetchone()[0]
+                self.cursor.execute("""
+                    SELECT m.username, m.positions FROM marks m WHERE m.event_id = %(e_id)s;
+                """, {"e_id": event_id})
+                marks_positions = {i[0]: i[1] for i in self.cursor.fetchall()}
             except pg.ProgrammingError as e:
                 error_print(e)
                 self.connection.rollback()
-                return None, False
+                return None, None
             else:
-                return self.cursor.fetchall()
+                return calendar_grid, marks_positions
         else:
             print("Data Base doesn't connected")
-            return None, False
+            return None, None
 
     def update_vote(self, event_id: int, chat_id: int, positions: list[bool]) -> None:
         if self.connection:
