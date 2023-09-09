@@ -36,21 +36,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def open_web_app(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["current_group_id"] = int(context.args[0][4:])
     keyboard = InlineKeyboardMarkup.from_button(
-        InlineKeyboardButton(text="WEBAPP", web_app=WebAppInfo(url=WEB_APP_HOST + "/config_calendar"))
+        InlineKeyboardButton(text="WEBAPP", web_app=WebAppInfo(url=WEB_APP_HOST + "/pre_config_calendar"))
     )
-    await update.message.reply_text(
-        text="Go to web app",
-        reply_markup=keyboard
-    )
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="Go to webapp", reply_markup=keyboard)
 
 
 async def web_app_data_manage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     web_app_data = json.loads(update.effective_message.web_app_data.data)
-    match web_app_data["action"]:
-        case "config":
-            await create_calendar(update, context, web_app_data)
-        case "vote":
-            await get_vote_data(update, context, web_app_data)
+    print(web_app_data)
+    # match web_app_data["action"]:
+    #     case "config":
+    #         await create_calendar(update, context, web_app_data)
+    #     case "vote":
+    #         await get_vote_data(update, context, web_app_data)
 
 
 async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, web_app_data: dict):
@@ -67,8 +65,8 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, we
     event_id = calc.get_event_id(str(group_id), event_name, dates[0])
     picture_path = "pictures/" + str(event_id) + ".png"
 
-    db.create("calendars", {"group_id": group_id, "event_id": event_id, "event_name": event_name,
-              "active": True, "picture_path": picture_path})
+    db.create_calendar(event_id=event_id, group_id=group_id, event_name=event_name, dates=dates,
+                       picture_path=picture_path)
     db.commit()
 
     calendar = Calendar(dates, event_name)
@@ -114,14 +112,14 @@ async def check_user(event_id, chat_id):
 
 
 async def get_vote_data(update: Update, context: ContextTypes.DEFAULT_TYPE, web_app_data: dict):
-
     event_id = context.user_data["current_event_id"]
     chat_id = update.effective_chat.id
-    dates = web_app_data["dates"]
+    positions = web_app_data["positions"]
+    username = update.effective_chat.username # not checked response
     if await check_user(event_id, chat_id):
-        db.update("dates", {"dates": dates})
+        db.update_vote(event_id=event_id, chat_id=chat_id, positions=positions)
     else:
-        db.create("dates", {"event_id": event_id, "chat_id": chat_id, "dates": dates})
+        db.create_vote(event_id=event_id, chat_id=chat_id, username=username, positions=positions)
 
     # Генерация новой картинки
     # Изменение картинки в группе
