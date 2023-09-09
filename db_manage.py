@@ -52,8 +52,8 @@ class DataBase:
     #     DELETE FROM {table} WHERE {" AND ".join([f"{key} = '{primary_key[key]}'" for key in primary_key])}
     #     """)
 
-    def create_calendar(self, event_id: int, group_id: int, event_name: str, calendar_grid: list[str],
-                        active: bool = True) -> None:
+    def create_calendar(self, event_id: int, group_id: int, event_name: str, dates: list[str],
+                        picture_path: str, active: bool = True) -> None:
         if self.connection:
             try:
                 self.cursor.execute("""
@@ -62,9 +62,10 @@ class DataBase:
                     %s,
                     %s,
                     %s,
+                    %s,
                     %s
                     );
-                """, (event_id, group_id, event_name, calendar_grid, active))
+                """, (event_id, group_id, event_name, dates, picture_path, active))
             except pg.ProgrammingError as e:
                 error_print(e)
                 self.connection.rollback()

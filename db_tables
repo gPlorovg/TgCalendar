@@ -13,11 +13,13 @@ CREATE TABLE marks
     username         VARCHAR(32),
     positions        BOOLEAN[35]
 );
+-- PIL requires path for saving picture
 CREATE TABLE calendars
 (
     event_id         BIGINT,
     group_id         BIGINT,
     event_name       VARCHAR(60),
-    calendar_grid    VARCHAR(10)[35],
+    dates            VARCHAR(10)[35],
+    picture_path     VARCHAR(60),
     active           BOOLEAN
 );
