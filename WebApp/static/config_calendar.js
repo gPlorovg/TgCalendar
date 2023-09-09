@@ -2,6 +2,7 @@ const calendar = document.querySelector("table");
 const event_label = document.createElement("label");
 const create_btn = document.createElement("button");
 let dates;
+
 create_btn.innerText = "create calendar";
 create_btn.addEventListener("click", create_calendar);
 event_label.textContent = localStorage.getItem("event_name");
@@ -16,13 +17,17 @@ const clicked_days = new Array(35).fill(false);
 // day.innerText = "5";
 
 function create_calendar() {
-    fetch(window.location.origin + "/create_calendar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dates.filter((item, i) => clicked_days[i]))
-    });
+    // console.log(JSON.stringify(dates));
+    window.Telegram.WebApp.sendData(JSON.stringify("test"))
+    // fetch(window.location.origin + "/create_calendar", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(dates.filter((item, i) => clicked_days[i]))
+    // })
+    //     .then((resp) => resp.json())
+    //     .then((resp) => feedback(resp));
 }
 
 function day_click(el) {
@@ -47,6 +52,10 @@ function day_click(el) {
             el.target.style.color = "#D9D9D9";
         }
     }
+}
+
+function feedback (resp) {
+    console.log(resp);
 }
 
 // day.addEventListener("click", day_click);
