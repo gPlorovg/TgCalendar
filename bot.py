@@ -1,7 +1,8 @@
 from os import getenv
 from dotenv import load_dotenv
 import logging
-from telegram import Update, helpers, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
+from telegram import Update, helpers, InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo, KeyboardButton, \
+    ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, filters, MessageHandler, CallbackQueryHandler
 import json
 import calculate as calc
@@ -35,14 +36,18 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def open_web_app(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["current_group_id"] = int(context.args[0][4:])
-    keyboard = InlineKeyboardMarkup.from_button(
-        InlineKeyboardButton(text="WEBAPP", web_app=WebAppInfo(url=WEB_APP_HOST + "/pre_config_calendar"))
+    await update.message.reply_text(
+        "Please press the button below to choose a color via the WebApp.",
+        reply_markup=ReplyKeyboardMarkup.from_button(
+            KeyboardButton(
+                text="Config calendar!",
+                web_app=WebAppInfo(url=WEB_APP_HOST + "/pre_config_calendar"),
+            )
+        ),
     )
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Go to webapp", reply_markup=keyboard)
 
 
 async def web_app_data_manage(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print("webdata")
     web_app_data = json.loads(update.effective_message.web_app_data.data)
     print(web_app_data)
     # match web_app_data["action"]:
@@ -134,4 +139,4 @@ if __name__ == '__main__':
     application.add_handler(CallbackQueryHandler(send_calendar_to_group, r"send_calendar_to_group"))
     application.add_handler(CommandHandler("start", start))
 
-    application.run_polling()
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
