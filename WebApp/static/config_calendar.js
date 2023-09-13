@@ -18,7 +18,8 @@ const clicked_days = new Array(35).fill(false);
 
 function create_calendar() {
     // console.log(JSON.stringify(dates));
-    window.Telegram.WebApp.sendData(JSON.stringify("test"))
+    window.Telegram.WebApp.sendData(JSON.stringify("test"));
+    window.Telegram.WebApp.close();
     // fetch(window.location.origin + "/create_calendar", {
     //             method: "POST",
     //             headers: {
@@ -108,4 +109,5 @@ function draw_grid(positions, months_positions) {
 
 fetch(window.location.origin + "/tg_calendar/calendar_grid?start_date=" + localStorage.getItem("start_date"))
     .then((json_data) => json_data.json())
-    .then((resolved_data) => draw_grid(resolved_data.positions, resolved_data.months_positions));
+    .then((resolved_data) => draw_grid(resolved_data.positions, resolved_data.months_positions))
+    .then(()=> window.Telegram.WebApp.ready());

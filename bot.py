@@ -42,6 +42,7 @@ async def open_web_app(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 async def web_app_data_manage(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("webdata")
     web_app_data = json.loads(update.effective_message.web_app_data.data)
     print(web_app_data)
     # match web_app_data["action"]:
