@@ -71,17 +71,15 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, we
     event_id = calc.get_event_id(str(group_id), event_name, dates[0])
     picture_path = "pictures/" + str(event_id) + ".png"
 
-    db.create_calendar(event_id=event_id, group_id=group_id, event_name=event_name, dates=dates,
-                       picture_path=picture_path)
-    db.commit()
+    #db.create_calendar(event_id=event_id, group_id=group_id, event_name=event_name, dates=dates,
+    #                   picture_path=picture_path)
+    #db.commit()
 
     calendar = Calendar(dates, event_name)
     calendar.save(picture_path)
 
-    url = helpers.create_deep_linked_url(context.bot.username, "eid_" + str(event_id))
-
     keyboard = InlineKeyboardMarkup.from_button(
-        InlineKeyboardButton(text="SEND", callback_data=f"send_calendar_to_group:{group_id}:{picture_path}:{url}")
+        InlineKeyboardButton(text="SEND", callback_data=f"sctg:{group_id}:{event_id}")
     )
     await update.message.reply_text(
         text="Finish creation",
@@ -90,7 +88,9 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, we
 
 
 async def send_calendar_to_group(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    _, group_id, picture_path, url = update.callback_query.data.split(":")
+    _, group_id, event_id = update.callback_query.data.split(":")
+    url = helpers.create_deep_linked_url(context.bot.username, "eid_" + str(event_id))
+    picture_path = "pictures/" + str(event_id) + ".png"
     keyboard = InlineKeyboardMarkup.from_button(
         InlineKeyboardButton(text="Vote", url=url)
     )
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     application.add_handler(CommandHandler("start", open_web_app, filters.Regex("gid_")))
     application.add_handler(CommandHandler("start", vote, filters.Regex("eid_")))
     application.add_handler(MessageHandler(filters.StatusUpdate.WEB_APP_DATA, web_app_data_manage))
-    application.add_handler(CallbackQueryHandler(send_calendar_to_group, r"send_calendar_to_group"))
+    application.add_handler(CallbackQueryHandler(send_calendar_to_group, r"sctg"))
     application.add_handler(CommandHandler("start", start))
 
     application.run_polling(allowed_updates=Update.ALL_TYPES)
