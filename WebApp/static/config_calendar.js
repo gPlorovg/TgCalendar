@@ -18,7 +18,18 @@ const clicked_days = new Array(35).fill(false);
 
 function create_calendar() {
     // console.log(JSON.stringify(dates));
-    window.Telegram.WebApp.sendData(JSON.stringify("test"));
+    const data_set = {
+        "action" : "config",
+        "event_name" : localStorage.getItem("event_name"),
+        "dates": dates.filter((item, i) => clicked_days[i])
+    };
+    window.Telegram.WebApp.sendData(JSON.stringify(data_set));
+    // const resp = JSON.stringify({"data": dates.filter((item, i) => clicked_days[i]),
+    //     "action" : "config"});
+    // console.log(resp);
+    // const parse_resp = JSON.parse(resp);
+    // console.log(parse_resp["action"]);
+    // console.log(parse_resp["data"]);
     // window.Telegram.WebApp.close();
     // fetch(window.location.origin + "/create_calendar", {
     //             method: "POST",

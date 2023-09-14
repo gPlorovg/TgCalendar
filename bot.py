@@ -50,11 +50,11 @@ async def open_web_app(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def web_app_data_manage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     web_app_data = json.loads(update.effective_message.web_app_data.data)
     print(web_app_data)
-    # match web_app_data["action"]:
-    #     case "config":
-    #         await create_calendar(update, context, web_app_data)
-    #     case "vote":
-    #         await get_vote_data(update, context, web_app_data)
+    match web_app_data["action"]:
+        case "config":
+            await create_calendar(update, context, web_app_data)
+        case "vote":
+            await get_vote_data(update, context, web_app_data)
 
 
 async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, web_app_data: dict):
@@ -62,7 +62,7 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, we
     # date1 = "08.07.2023"
     # date2 = "10.07.2023"
     group_id = context.user_data["current_group_id"]
-    web_app_data = json.loads(update.effective_message.web_app_data.data)
+    # web_app_data = json.loads(update.effective_message.web_app_data.data)
     event_name = web_app_data["event_name"]
     dates = web_app_data["dates"]
     # date1 = web_app_data["date1"]
