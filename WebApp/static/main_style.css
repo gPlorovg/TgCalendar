@@ -357,8 +357,6 @@ body {
   flex-wrap: nowrap;
   gap: 24px;
   flex-direction: column;
-  overflow-x: scroll;
-
   width: 80%;
   margin: 50px auto;
 }
