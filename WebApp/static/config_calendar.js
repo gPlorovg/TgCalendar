@@ -1,14 +1,20 @@
 const calendar = document.querySelector("table");
 const event_label = document.createElement("label");
-const create_btn = document.createElement("button");
+// const create_btn = document.createElement("button");
 let dates;
+const tg = window.Telegram.WebApp;
 
-create_btn.innerText = "create calendar";
-create_btn.addEventListener("click", create_calendar);
+tg.MainButton.text = "create";
+tg.MainButton.setParams({"background-color": "#DF2727", "color": "#FFFFFF"});
+tg.addEventListener("touchend", create_calendar);
+
+// create_btn.innerText = "create calendar";
+// create_btn.addEventListener("click", create_calendar);
 event_label.textContent = localStorage.getItem("event_name");
 event_label.setAttribute("id", "event_name");
 calendar.insertAdjacentElement("beforebegin", event_label);
-calendar.insertAdjacentElement("afterend", create_btn);
+// calendar.insertAdjacentElement("afterend", create_btn);
+
 
 const clicked_days = new Array(35).fill(false);
 // const day = document.createElement("td");
@@ -23,7 +29,7 @@ function create_calendar() {
         "event_name" : localStorage.getItem("event_name"),
         "dates": dates.filter((item, i) => clicked_days[i])
     };
-    window.Telegram.WebApp.sendData(JSON.stringify(data_set));
+    tg.sendData(JSON.stringify(data_set));
     // const resp = JSON.stringify({"data": dates.filter((item, i) => clicked_days[i]),
     //     "action" : "config"});
     // console.log(resp);
@@ -80,6 +86,8 @@ function feedback (resp) {
 
 
 function draw_grid(positions, months_positions) {
+    tg.ready();
+    // tg.expand();
     dates = positions;
     let dates_row;
     let month_cell;
@@ -121,5 +129,4 @@ function draw_grid(positions, months_positions) {
 
 fetch(window.location.origin + "/tg_calendar/calendar_grid?start_date=" + localStorage.getItem("start_date"))
     .then((json_data) => json_data.json())
-    .then((resolved_data) => draw_grid(resolved_data.positions, resolved_data.months_positions))
-    .then(()=> window.Telegram.WebApp.ready());
+    .then((resolved_data) => draw_grid(resolved_data.positions, resolved_data.months_positions));
