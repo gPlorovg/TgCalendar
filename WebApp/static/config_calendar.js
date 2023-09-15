@@ -7,6 +7,7 @@ const tg = window.Telegram.WebApp;
 tg.MainButton.text = "create";
 tg.MainButton.setParams({"color": "#DF2727", "textColor": "#FFFFFF"});
 tg.MainButton.onClick(create_calendar);
+tg.MainButton.show();
 
 // create_btn.innerText = "create calendar";
 // create_btn.addEventListener("click", create_calendar);
@@ -87,7 +88,7 @@ function feedback (resp) {
 
 function draw_grid(positions, months_positions) {
     tg.ready();
-    // tg.expand();
+    tg.expand();
     dates = positions;
     let dates_row;
     let month_cell;
