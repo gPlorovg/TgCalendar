@@ -5,8 +5,8 @@ let dates;
 const tg = window.Telegram.WebApp;
 
 tg.MainButton.text = "create";
-tg.MainButton.setParams({"background-color": "#DF2727", "color": "#FFFFFF"});
-tg.addEventListener("touchend", create_calendar);
+tg.MainButton.setParams({"color": "#DF2727", "textColor": "#FFFFFF"});
+tg.MainButton.onClick(create_calendar);
 
 // create_btn.innerText = "create calendar";
 // create_btn.addEventListener("click", create_calendar);
