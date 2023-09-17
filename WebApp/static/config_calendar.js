@@ -86,10 +86,6 @@ function feedback (resp) {
 
 
 function draw_grid(positions, months_positions) {
-    tg.ready();
-    tg.expand();
-    tg.MainButton.show();
-
     dates = positions;
     let dates_row;
     let month_cell;
@@ -125,6 +121,9 @@ function draw_grid(positions, months_positions) {
         }
         weekdays.push(day)
     }
+    tg.ready();
+    // tg.expand();
+    tg.MainButton.show();
 }
 
 // draw_grid(['', '', '16.08.2023', '17.08.2023', '18.08.2023', '19.08.2023', '20.08.2023', '21.08.2023', '22.08.2023', '23.08.2023', '24.08.2023', '25.08.2023', '26.08.2023', '27.08.2023', '28.08.2023', '29.08.2023', '30.08.2023', '31.08.2023', '', '', '', '', '', '', '', '01.09.2023', '02.09.2023', '03.09.2023', '04.09.2023', '05.09.2023', '06.09.2023', '07.09.2023', '08.09.2023', '09.09.2023', '10.09.2023'],['August', '', '', 'September', '']);
