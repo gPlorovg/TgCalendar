@@ -1,6 +1,5 @@
 const calendar = document.querySelector("table");
-// const event_label = document.createElement("label");
-const event_label = "W: " + window.innerWidth + " H: " + window.innerHeight;
+const event_label = document.createElement("label");
 // const create_btn = document.createElement("button");
 let dates;
 const tg = window.Telegram.WebApp;
@@ -11,7 +10,8 @@ tg.MainButton.onClick(create_calendar);
 
 // create_btn.innerText = "create calendar";
 // create_btn.addEventListener("click", create_calendar);
-event_label.textContent = localStorage.getItem("event_name");
+// event_label.textContent = localStorage.getItem("event_name");
+event_label.textContent = "W: " + window.innerWidth + " H: " + window.innerHeight;
 event_label.setAttribute("id", "event_name");
 calendar.insertAdjacentElement("beforebegin", event_label);
 // calendar.insertAdjacentElement("afterend", create_btn);
