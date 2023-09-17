@@ -129,6 +129,6 @@ function draw_grid(positions, months_positions) {
 
 // draw_grid(['', '', '16.08.2023', '17.08.2023', '18.08.2023', '19.08.2023', '20.08.2023', '21.08.2023', '22.08.2023', '23.08.2023', '24.08.2023', '25.08.2023', '26.08.2023', '27.08.2023', '28.08.2023', '29.08.2023', '30.08.2023', '31.08.2023', '', '', '', '', '', '', '', '01.09.2023', '02.09.2023', '03.09.2023', '04.09.2023', '05.09.2023', '06.09.2023', '07.09.2023', '08.09.2023', '09.09.2023', '10.09.2023'],['August', '', '', 'September', '']);
 
-fetch(window.location.origin + "/calendar_grid?start_date=" + localStorage.getItem("start_date"))
+fetch(window.location.origin + "/tg_calendar/calendar_grid?start_date=" + localStorage.getItem("start_date"))
     .then((json_data) => json_data.json())
     .then((resolved_data) => draw_grid(resolved_data.positions, resolved_data.months_positions));
