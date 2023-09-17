@@ -21,7 +21,7 @@ def calendar_grid():
     date1 = ".".join(date1.split("-")[::-1])
     return get_positions(generate_days(date1))
 
-# If I decide server to get response
+# If I decide server to receive response
 # @app.post("/create_calendar")
 # def create_calendar():
 #     print(request.get_json())

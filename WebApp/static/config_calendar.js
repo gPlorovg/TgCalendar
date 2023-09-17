@@ -1,5 +1,6 @@
 const calendar = document.querySelector("table");
-const event_label = document.createElement("label");
+// const event_label = document.createElement("label");
+const event_label = "W: " + window.innerWidth + " H: " + window.innerHeight;
 // const create_btn = document.createElement("button");
 let dates;
 const tg = window.Telegram.WebApp;
@@ -87,7 +88,7 @@ function feedback (resp) {
 
 function draw_grid(positions, months_positions) {
     tg.ready();
-    tg.expand();
+    // tg.expand();
     tg.MainButton.show();
 
     dates = positions;
