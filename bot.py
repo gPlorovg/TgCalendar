@@ -71,9 +71,9 @@ async def create_calendar(update: Update, context: ContextTypes.DEFAULT_TYPE, we
     event_id = calc.get_event_id(str(group_id), event_name, dates[0])
     picture_path = "pictures/" + str(event_id) + ".png"
 
-    #db.create_calendar(event_id=event_id, group_id=group_id, event_name=event_name, dates=dates,
-    #                   picture_path=picture_path)
-    #db.commit()
+    db.create_calendar(event_id=event_id, group_id=group_id, event_name=event_name, dates=dates,
+                       picture_path=picture_path)
+    db.commit()
 
     calendar = Calendar(dates, event_name)
     calendar.save(picture_path)
