@@ -1,0 +1,57 @@
+/*Импорт шрифтов fonts Roboto Mono*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+body {
+  font-family: "Roboto Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  background-color: #1E1E1E;
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+}
+input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  padding: 4px;
+}
+button {
+  background-color: #DF2727;
+  color: white;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+button:active {
+  background-color: white;
+  color: #DF2727;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 24px;
+  flex-direction: column;
+  width: 80%;
+  margin: 50px auto;
+}
+
+.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 16px;
+  flex-direction: column;
+  margin: auto;
+}
