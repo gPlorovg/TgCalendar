@@ -26,6 +26,7 @@ body {
 
 
 table {
+  margin: 20px auto;
   width: 392px;
   border-collapse: separate;
   border-spacing: 5px;       /*70px total*/
@@ -44,7 +45,7 @@ table {
   width: 50px;
   max-height: 50px;
 
-  font-size: 11px;
+  font-size: 16px;
   border-radius: 12px;
   background-color: #D9D9D9;
   border: 2px solid #1E1E1E;
@@ -70,11 +71,11 @@ table {
   /*height: 50px;*/
   height: 50px;
   color: #1E1E1E;
-  font-size: 9px;
+  font-size: 12px;
   text-decoration: underline;
   text-align: left;
   /*padding: 10px 5px 0 0;*/
-  padding-top: 5px;
+  /*padding-top: 5px;*/
 }
 
 .empty {
