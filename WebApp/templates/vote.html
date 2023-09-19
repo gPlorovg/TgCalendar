@@ -4,8 +4,25 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        window.localStorage.setItem("event_id", "{{event_id}}")
+    </script>
+    <link rel="stylesheet" href="../static/reset_style.css">
+    <link rel="stylesheet" href="../static/vote_style.css">
 </head>
 <body>
-
+    <table>
+            <tr>
+                <th></th>
+                <th class="weekday">Monday</th>
+                <th class="weekday">Tuesday</th>
+                <th class="weekday">Wednesday</th>
+                <th class="weekday">Thursday</th>
+                <th class="weekday">Friday</th>
+                <th class="weekday weekday_holiday">Saturday</th>
+                <th class="weekday weekday_holiday">Sunday</th>
+            </tr>
+    </table>
+    <script src="../static/vote.js"></script>
 </body>
 </html>
