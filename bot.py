@@ -37,7 +37,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def open_web_app(update: Update, context: ContextTypes.DEFAULT_TYPE):
     context.user_data["current_group_id"] = int(context.args[0][4:])
     await update.message.reply_text(
-        "Please press the button below to choose a color via the WebApp.",
+        "Push big button below!",
         reply_markup=ReplyKeyboardMarkup.from_button(
             KeyboardButton(
                 text="Config calendar!",
@@ -49,7 +49,6 @@ async def open_web_app(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def web_app_data_manage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     web_app_data = json.loads(update.effective_message.web_app_data.data)
-    print(web_app_data)
     match web_app_data["action"]:
         case "config":
             await create_calendar(update, context, web_app_data)
