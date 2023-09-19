@@ -97,9 +97,9 @@ class DataBase:
                 #     WHERE c.event_id=%(e_id)s AND m.event_id=%(e_id)s;
                 # """, {"e_id": event_id})
                 self.cursor.execute("""
-                    SELECT c.dates FROM calendars c WHERE c.event_id = %(e_id)s;
+                    SELECT c.dates, c.event_name FROM calendars c WHERE c.event_id = %(e_id)s;
                 """, {"e_id": event_id})
-                dates = self.cursor.fetchone()[0]
+                dates, event_name = self.cursor.fetchone()
                 self.cursor.execute("""
                     SELECT m.username, m.positions FROM marks m WHERE m.event_id = %(e_id)s;
                 """, {"e_id": event_id})
@@ -109,7 +109,7 @@ class DataBase:
                 self.connection.rollback()
                 return None, None
             else:
-                return dates, marks_positions
+                return dates, event_name, marks_positions
         else:
             print("Data Base doesn't connected")
             return None, None
