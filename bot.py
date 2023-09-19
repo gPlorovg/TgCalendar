@@ -100,13 +100,16 @@ async def send_calendar_to_group(update: Update, context: ContextTypes.DEFAULT_T
 
 
 async def vote(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    context.user_data["current_event_id"] = int(context.args[0][4:])
-    keyboard = InlineKeyboardMarkup.from_button(
-        InlineKeyboardButton(text="WEBAPP", web_app=WebAppInfo(url=WEB_APP_HOST + "/vote"))
-    )
+    event_id = int(context.args[0][4:])
+    context.user_data["current_event_id"] = event_id
     await update.message.reply_text(
-        text="Go to web app",
-        reply_markup=keyboard
+        "Push big button below to vote!",
+        reply_markup=ReplyKeyboardMarkup.from_button(
+            KeyboardButton(
+                text="Vote for days!",
+                web_app=WebAppInfo(url=WEB_APP_HOST + "/vote" + f"?e_id={event_id}")
+            )
+        ),
     )
 
 
